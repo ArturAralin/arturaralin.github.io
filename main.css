@@ -42,7 +42,7 @@ header h1 {
 }
 
 #main_section article {
-  width: 65%;
+  width: 90%;
   margin: 2% auto;
 }
 
@@ -116,6 +116,10 @@ header h1 {
 @media screen and (min-width: 1024px) {
   #wrap {
     width: 70%;
+  }
+
+  #main_section article {
+    width: 65%;
   }
 }
 
