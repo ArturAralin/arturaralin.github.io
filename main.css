@@ -38,6 +38,7 @@ header h1 {
   padding-bottom: 1em;
   position: relative;
   top: -7.5em;
+  cursor: default;
 }
 
 #main_section article {
@@ -57,10 +58,6 @@ header h1 {
 }
 
 #main_section article a {
-  color: #000;
-}
-
-#main_section article a:before {
   color: #000;
 }
 
