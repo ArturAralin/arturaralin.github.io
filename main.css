@@ -139,3 +139,7 @@ footer {
   position: relative;
   top: -3em;
 }
+
+footer a {
+  color: black;
+}
