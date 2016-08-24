@@ -9,6 +9,7 @@
   font-weight: 300;
   text-align: center;
   margin: 0 auto;
+  min-width: 320px;
 }
 
 /*header*/
@@ -120,6 +121,16 @@ header h1 {
 
   #main_section article {
     width: 65%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  #main_section {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select:none;
+    user-select:none;
+    -o-user-select:none;
   }
 }
 
