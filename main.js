@@ -4,6 +4,39 @@ console.log('Привет тебе, посетитель недр консоли
 
 var GITHUB_ACCOUNT_URL = 'https://api.github.com/users/arturaralin/repos';
 var IGNORE_REPO = 'ArturAralin/arturaralin.github.io';
+var PROJECTS_URL = '/projects/list.json';
+var myRepos = document.getElementById('my_repos');
+
+function loadProjects() {
+  function projFactory(name) {
+    name = '/projects/' + name;
+
+    return {
+      logo: name + '/logo.jpg',
+      laptop: name + '/laptop.png',
+      tablet: name + '/tablet.png',
+      mobile: name + '/mobile.png'
+    };
+  }
+
+  function createIMGElement(url) {
+    var img = document.createElement('img');
+    img.src = url;
+    return img;
+  }
+
+  function appendToContainer(img) {
+    myRepos.appendChild(img);
+  }
+
+  nanoajax.ajax({url: PROJECTS_URL}, function(code, res) {
+    JSON.parse(res)
+    .map(projFactory)
+    .map(function(project) {
+      return createIMGElement(project.logo);
+    }).forEach(appendToContainer);
+  });
+}
 
 function createTag(text, link) {
   var span = document.createElement('span');
@@ -24,9 +57,7 @@ function appendTags(block, repo) {
   }
 }
 
-function init() {
-  var myRepos = document.getElementById('my_repos');
-
+function loadRepos() {
   nanoajax.ajax({url: GITHUB_ACCOUNT_URL}, function(code, res) {
     try {
       var repos = JSON.parse(res);
@@ -38,6 +69,11 @@ function init() {
       myRepos.appendChild(p);
     } catch(err) {}
   });
+}
+
+function init() {
+  loadRepos();
+  loadProjects();
 }
 
 window.onload = init;
