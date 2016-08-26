@@ -73,7 +73,7 @@ function loadRepos() {
 
 function init() {
   loadRepos();
-  loadProjects();
+  // loadProjects();
 }
 
 window.onload = init;
