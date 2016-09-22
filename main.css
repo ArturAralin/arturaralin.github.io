@@ -82,6 +82,7 @@ header h1 {
   font-size: 0.9em;
   padding: 0.2em 0.4em 0.2em 0.4em;
   margin: 0.1em;
+  white-space: nowrap;
 }
 
 #main_section article p .sel:hover {
@@ -90,6 +91,7 @@ header h1 {
   font-weight: bold;
   background: #FFF;
 }
+
 /*langs*/
 #main_section article p .sel_js:hover {
   background: #F0DB4F;
