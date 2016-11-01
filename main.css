@@ -60,6 +60,7 @@ header h1 {
 
 #main_section article a {
   color: #000;
+  white-space: nowrap;
 }
 
 #main_section article p .elab {
@@ -80,9 +81,10 @@ header h1 {
 #main_section article p .sel {
   background: #e2e2e2;
   font-size: 0.9em;
-  padding: 0.2em 0.4em 0.2em 0.4em;
+  padding: 0 0.2em 0 0.2em;
   margin: 0.1em;
-  white-space: nowrap;
+  display: inline-block;
+  /*white-space: nowrap;*/
 }
 
 #main_section article p .sel:hover {
