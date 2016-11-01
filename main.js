@@ -1,6 +1,6 @@
 'use strict';
 
-console.log('Привет тебе, посетитель недр консоли!\nЕсли у тебя есть замечания к верстке, оптимизации или ты просто хочешь со мной пообщаться то пиши мне artur.aralin97@gmail.com\n\nWarning! Код, написанный мной, на этом сайте не сжат умышленно, чтобы таки любопытные люди, как вы, могли посмотреть на него :)');
+console.log('Привет тебе, посетитель недр консоли!\nЕсли у тебя есть замечания к верстке, оптимизации или ты просто хочешь со мной пообщаться то пиши мне artur.aralin97@gmail.com\n\nWarning! Код, написанный мной, на этом сайте не сжат умышленно, чтобы такие любопытные люди, как вы, могли посмотреть на него :)');
 
 var GITHUB_ACCOUNT_URL = 'https://api.github.com/users/arturaralin/repos';
 var IGNORE_REPO = 'ArturAralin/arturaralin.github.io';
@@ -73,7 +73,6 @@ function loadRepos() {
 
 function init() {
   loadRepos();
-  // loadProjects();
 }
 
 window.onload = init;
