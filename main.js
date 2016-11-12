@@ -7,37 +7,6 @@ var IGNORE_REPO = 'ArturAralin/arturaralin.github.io';
 var PROJECTS_URL = '/projects/list.json';
 var myRepos = document.getElementById('my_repos');
 
-function loadProjects() {
-  function projFactory(name) {
-    name = '/projects/' + name;
-
-    return {
-      logo: name + '/logo.jpg',
-      laptop: name + '/laptop.png',
-      tablet: name + '/tablet.png',
-      mobile: name + '/mobile.png'
-    };
-  }
-
-  function createIMGElement(url) {
-    var img = document.createElement('img');
-    img.src = url;
-    return img;
-  }
-
-  function appendToContainer(img) {
-    myRepos.appendChild(img);
-  }
-
-  nanoajax.ajax({url: PROJECTS_URL}, function(code, res) {
-    JSON.parse(res)
-    .map(projFactory)
-    .map(function(project) {
-      return createIMGElement(project.logo);
-    }).forEach(appendToContainer);
-  });
-}
-
 function createTag(text, link) {
   var span = document.createElement('span');
   span.setAttribute('class', 'sel');
@@ -50,8 +19,15 @@ function createTag(text, link) {
   return span;
 }
 
+function showOnSite(repo) {
+  var description = repo.description;
+  var haveHashCode = description && description.indexOf('#showOnSite') > -1 ? true : false;
+
+  return haveHashCode || repo.fork;
+}
+
 function appendTags(block, repo) {
-  if (repo.full_name !== IGNORE_REPO) {
+  if (showOnSite(repo)) {
     var name = repo.name + (repo.fork ? ' (fork)' : '');
     block.appendChild(createTag(name, repo.html_url));
   }
