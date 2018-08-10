@@ -1,0 +1,32 @@
+{
+  "name": "arturaralin.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArturAralin/arturaralin.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArturAralin/arturaralin.github.io/issues"
+  },
+  "homepage": "https://github.com/ArturAralin/arturaralin.github.io#readme",
+  "devDependencies": {
+    "node-sass": "^4.9.2",
+    "sass-loader": "^7.1.0",
+    "webpack": "^4.16.5"
+  },
+  "dependencies": {
+    "css-loader": "^1.0.0",
+    "markdown": "^0.5.0",
+    "particlesjs": "^2.2.2",
+    "style-loader": "^0.22.1",
+    "webpack-cli": "^3.1.0"
+  }
+}

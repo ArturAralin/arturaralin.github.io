@@ -1,0 +1,250 @@
+@import url('https://fonts.googleapis.com/css?family=Poiret+One');
+
+$main-color: #af2421;
+$main-text-color: #fff;
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  font-family: 'Poiret One', cursive;
+}
+
+.app {
+  position: relative;
+  z-index: 10;
+  color: $main-text-color;
+
+  &__header {
+    position: relative;
+    z-index: 500;
+    background: $main-color;
+    font-size: 2em;
+    padding: 1em;
+    color: $main-text-color;
+    box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.13);
+    height: 100%;
+    min-height: 100vh;
+  }
+
+  &__header a {
+    text-decoration: none;
+    color: $main-text-color;
+    cursor: pointer;
+  }
+
+  &__header h1 {
+    font-size: 2em;
+    margin-bottom: 0.25em;
+  }
+
+  &__footer {
+    background: $main-color;
+    padding: 2em;
+    text-align: center;
+  }
+}
+
+.items {
+  height: 70%;
+  margin: 0 auto;
+
+  &__figure {
+    width: 100%;
+    text-align: center;
+    transition: transform 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background: url(/img.jpg) no-repeat;
+    background-size: cover;
+    background-position: 0%;
+    min-height: 100vh;
+    margin-bottom: 1em;
+    // box-shadow: 0px 0px 6px 2px rgba(0,0,0,0.13);
+
+    &__f1 {
+      background-image: url(/img.jpg);
+    }
+
+    &__f2 {
+      background-image: url(/img.jpg);
+    }
+
+    &__f3 {
+      background-image: url(/img.jpg);
+    }
+
+    &__content {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      color: $main-text-color;
+      background: #4861ad23; // !!!
+      text-align: left;
+      transition: width 0.3s ease;
+
+      &__header {
+        position: absolute;
+        transform: rotate(-90deg);
+        bottom: 0;
+        left: 0.6em;
+        font-size: 3em;
+        text-align: right;
+        transform-origin: left center;
+      }
+
+      &__description {
+        position: absolute;
+        right: 0;
+        width: 65vw;
+        height: 100%;
+        font-size: 1.5em;
+        padding: 1em;
+        background: $main-color;
+
+        &__readmore {
+          text-decoration: underline;
+          cursor: pointer;
+          color: $main-text-color;
+        }
+      }
+
+      &__description p {
+        margin: 0.25em 0;
+      }
+    }
+  }
+}
+
+.background {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.popup {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 94%;
+  z-index: 999999;
+  background: $main-color;
+  color: $main-text-color;
+  min-height: 100vh;
+  padding: 3%;
+
+  &__header {
+    &__button {
+      background: none;
+      color: $main-text-color;
+      font-size: 3em;
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 2em;
+      height: 2em;
+    }
+
+    &__button:focus {
+      outline: 0;
+    }
+  }
+
+  &__header h1 {
+    font-size: 3em;
+  }
+
+  &__main {
+    padding: 1em;
+    font-size: 2em;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .app {
+    overflow: hidden;
+    height: 100%;
+
+    &__header {
+      font-size: 1em;
+      min-height: auto;
+      height: auto;
+    }
+
+    &__header h1 {
+      display: inline;
+    }
+
+    &__header p {
+      display: inline;
+    }
+
+    &__footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+    }
+  }
+
+  .items {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+    height: 62%;
+
+    &__figure {
+      width: 28%;
+      min-height: auto;
+      height: 100%;
+
+      &__content {
+        background: $main-color;
+        height: auto;
+        top: auto;
+        bottom: 0;
+        padding-bottom: 1em;
+
+        &__header {
+          transform: rotate(0deg);
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          text-align: center;
+          position: relative;
+          margin-top: 0.25em;
+        }
+
+        &__description {
+          position: relative;
+          font-size: 1em;
+          padding: 0;
+          margin: 1em;
+          width: auto;
+          margin: 0 15%;
+          text-align: center;
+        }
+      }
+
+      &__f2 {
+        transform: scale(1.2);
+        z-index: 100;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .items {
+    margin-top: 8%;
+  }
+}
