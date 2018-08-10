@@ -2,15 +2,9 @@ require('./main.scss');
 const Particles = require('particlesjs');
 const md = require('markdown');
 
-window.onload = () => {
-  Particles.init({
-    selector: '#bg',
-    color: '#0c182a',
-    maxParticles: 1000,
-  });
-};
-
+const BG_MIN_WIDTH = 1024;
 let scrollYValueBeforePopup = null;
+let animatedBackground;
 
 const getScrollValue = () => (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0);
 
@@ -28,7 +22,7 @@ const replaceImgs = (html) => {
     const alt = getAttrVal('alt', val);
 
     return `<div class="popup__main__picture">
-      <div class="popup__main__picture__bg" style="background-image: url(${src});"></div>
+      <div class="popup__main__picture__bg" style="background: url(${src}) center;"></div>
       <img alt="${alt}" src="${src}" />
     </div>`;
   });
@@ -89,4 +83,29 @@ window.popUpCreator = (mdFileName, topic) => {
     });
 };
 
-window.popUpCreator('test', 'top')
+const getBodyWidth = () => document.querySelector('body').offsetWidth;
+
+const resizeHandler = () => {
+  const isShowBg = getBodyWidth() > BG_MIN_WIDTH;
+
+  if (!animatedBackground) {
+    animatedBackground = Particles.init({
+      selector: '#bg',
+      color: '#0c182a',
+      maxParticles: 1000,
+    });
+  }
+
+  if (isShowBg) {
+    animatedBackground.resumeAnimation();
+  } else {
+    animatedBackground.pauseAnimation();
+  }
+};
+
+
+window.onload = () => {
+  resizeHandler();
+
+  window.addEventListener('resize', resizeHandler);
+};

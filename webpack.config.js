@@ -1,6 +1,10 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const StaticServer = require('static-server');
 
+const DEV_SERVER_PORT = 8000;
+
+const { log } = console;
 
 const BASE_CONFIG = {
   entry: path.resolve(__dirname, './src/app.js'),
@@ -10,6 +14,17 @@ const BASE_CONFIG = {
   },
   watch: true,
 };
+
+const server = new StaticServer({
+  rootPath: __dirname,
+  port: DEV_SERVER_PORT,
+  host: '0.0.0.0',
+  cors: '*',
+  followSymlink: true,
+  templates: {
+    index: 'index.html',
+  },
+});
 
 
 const getStylesRules = isDevMode => ({
@@ -33,6 +48,10 @@ module.exports = (env, argv) => {
       chunkFilename: '[id].css',
     }),
   ];
+
+  server.start(() => {
+    log(`Dev server has been started on http://localhost:${DEV_SERVER_PORT}`);
+  });
 
   return {
     ...BASE_CONFIG,

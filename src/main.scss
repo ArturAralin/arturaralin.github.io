@@ -2,7 +2,7 @@
 
 $main-color: #af2421;
 $main-text-color: #fff;
-$bg-color: #c18d8d29;
+$bg-color: rgba(193, 141, 141, 0.161);
 $link-color: #fff;
 
 * {
@@ -56,7 +56,7 @@ body, html {
 .items {
   height: 70%;
   margin: 0 auto;
-  max-width: 1024px;
+  max-width: 1440px;
 
   &__figure {
     width: 100%;
@@ -186,9 +186,8 @@ body, html {
         top: 0;
         width: 100%;
         height: 100%;
-        filter: blur(10px) contrast(50%);
+        filter: blur(10px) contrast(50%) opacity(95%);
         background-size: cover;
-        background-position: center;
       }
     }
 
@@ -201,7 +200,7 @@ body, html {
   &__main img {
     display: block;
     margin: 1em auto;
-    width: 90%;
+    max-width: 90%;
   }
 
   &__main a {
