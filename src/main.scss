@@ -2,6 +2,8 @@
 
 $main-color: #af2421;
 $main-text-color: #fff;
+$bg-color: #c18d8d29;
+$link-color: #fff;
 
 * {
   margin: 0;
@@ -13,6 +15,7 @@ body, html {
   width: 100%;
   height: 100%;
   font-family: 'Poiret One', cursive;
+  background: $bg-color;
 }
 
 .app {
@@ -53,6 +56,7 @@ body, html {
 .items {
   height: 70%;
   margin: 0 auto;
+  max-width: 1024px;
 
   &__figure {
     width: 100%;
@@ -167,6 +171,46 @@ body, html {
   &__main {
     padding: 1em;
     font-size: 2em;
+
+    &__picture {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding: 1px;
+      margin: 0.5em 0;
+      overflow: hidden;
+
+      &__bg {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        filter: blur(10px) contrast(50%);
+        background-size: cover;
+        background-position: center;
+      }
+    }
+
+    &__picture img {
+      position: relative;
+      z-index: 300;
+    }
+  }
+
+  &__main img {
+    display: block;
+    margin: 1em auto;
+    width: 90%;
+  }
+
+  &__main a {
+    color: $link-color;
+  }
+
+  &__main ul {
+    margin: 0.5em 0;
+    margin-left: 1.2em;
   }
 }
 
@@ -174,6 +218,7 @@ body, html {
   .app {
     overflow: hidden;
     height: 100%;
+    min-height: 800px;
 
     &__header {
       font-size: 1em;
@@ -199,7 +244,7 @@ body, html {
   .items {
     display: flex;
     justify-content: center;
-    margin-top: 5%;
+    margin-top: 8vh;
     height: 62%;
 
     &__figure {
@@ -221,7 +266,7 @@ body, html {
           width: 100%;
           text-align: center;
           position: relative;
-          margin-top: 0.25em;
+          margin: 0.25em 0;
         }
 
         &__description {
@@ -232,6 +277,7 @@ body, html {
           width: auto;
           margin: 0 15%;
           text-align: center;
+          background: inherit;
         }
       }
 
@@ -243,8 +289,8 @@ body, html {
   }
 }
 
-@media screen and (min-width: 1440px) {
+@media screen and (min-height: 850px) {
   .items {
-    margin-top: 8%;
+    margin-top: 11vh;
   }
 }

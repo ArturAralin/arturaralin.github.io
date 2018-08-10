@@ -18,6 +18,10 @@
   },
   "homepage": "https://github.com/ArturAralin/arturaralin.github.io#readme",
   "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0",
+    "mini-css-extract-plugin": "^0.4.1",
     "node-sass": "^4.9.2",
     "sass-loader": "^7.1.0",
     "webpack": "^4.16.5"
