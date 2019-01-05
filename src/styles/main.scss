@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Poiret+One');
+
+body {
+  background: black;
+  color: white;
+  text-align: center;
+  font-family: 'Poiret One';
+}
+
+.container {
+  &__header {
+    height: 100vh;
+
+    .name_block {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      text-align: right;
+  
+      h1 {
+        font-size: 4em;
+        margin: 0.5em;
+      }
+    }
+
+    .header_section {
+      position: absolute;
+      width: 100%;
+      background-size: cover;
+      height: 100vh;
+  
+  
+      &__developer {
+        background: url(/static/laptop.jpeg);
+        
+        h2 {
+          left: 0;
+          top: 0;
+        }
+      }
+    
+      &__musician {
+        background: url(/static/guitar.jpeg);
+        clip-path: polygon(100% -20%, 21% 100%, 100% 100%);
+    
+        h2 {
+          right: 0;
+          bottom: 0;
+        }
+      }
+    }
+  }
+  
+  h2 {
+    position: absolute;
+    font-size: 8em;
+    margin: 0.75em;
+  }
+
+  .info {
+    &__section {
+      text-align: left;
+      font-size: 2em;
+
+      h3 {
+
+      }
+
+      p {}
+    }
+  }
+}
