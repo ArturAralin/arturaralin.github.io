@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat|Poiret+One|Roboto');
+@font-face {
+  font-family: Montserrat;
+  src: url(/static/montserrat-regular.ttf);
+}
+
+@font-face {
+  font-family: Poiret One;
+  src: url(/static/poiretone-regular.ttf);
+}
 
 body {
   background: black;
