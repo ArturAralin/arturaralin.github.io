@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300|Poiret+One');
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Poiret+One|Roboto');
 
 body {
   background: black;
@@ -22,6 +22,9 @@ body {
       h1 {
         font-size: 4em;
         margin: 0.5em;
+        display: inline-block;
+        background: #000;
+        padding: 0.25em;
       }
     }
 
@@ -31,44 +34,122 @@ body {
       background-size: cover;
       height: 100vh;
   
-  
+      p {
+        margin: 0;
+        padding: 0;
+        font-size: 1.125em;
+      }
+
       &__developer {
-        background: url(/static/laptop.jpeg);
+        background: url(/static/laptop.jpeg) center;
+        animation: left-bg-animation 1s;
+        animation-timing-function: ease;
         
-        h2 {
+        &__block {
+          position: absolute;
           left: 0;
           top: 0;
+          text-align: left;
+          margin: 1em;
+          background: #000;
+          padding: 1em;
+          z-index: 100;
+
+          h2 {
+            font-size: 8em;
+            margin: 0;
+          }
         }
       }
     
       &__musician {
-        background: url(/static/guitar.jpeg);
+        background: url(/static/guitar.jpeg) center;
         clip-path: polygon(100% -20%, 21% 100%, 100% 100%);
+        animation: right-bg-animation  1s;
+        animation-timing-function: ease;
     
-        h2 {
+        &__block {
+          position: absolute;
           right: 0;
           bottom: 0;
+          text-align: right;
+          margin: 1em;
+          background: #000;
+          padding: 1em;
+
+          h2 {
+            font-size: 8em;
+            margin: 0;
+            margin-top: -0.3em;
+          }
         }
       }
     }
   }
-  
-  h2 {
-    position: absolute;
-    font-size: 8em;
-    margin: 0.75em;
-  }
 
   .info {
+    margin-top: 2em;
+
     &__section {
       text-align: left;
-      font-size: 2em;
+      padding: 0.5em 2em;
 
-      h3 {
-
+      &__icon {
+        width: 1em;
       }
 
-      p {}
+      &__list {
+        margin: 0;
+        padding: 0 1em;
+        font-size: 2em;
+        font-family: 'Montserrat', sans-serif;
+
+        li {
+          list-style: none;
+        }
+      }
+
+      a {
+        color: #fff;
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 3.5em;
+        padding-bottom: 0.5em;
+      }
+
+      p {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 1.5em;
+        margin: 0.5em 1em;
+      }
     }
   }
+
+  footer {
+    padding: 1em;
+  }
 }
+
+@keyframes left-bg-animation {
+  0% {
+    background-position-x: 52%;
+  }
+
+  100% {
+    background-position-x: 50%;
+  }
+}
+
+@keyframes right-bg-animation {
+  0% {
+    background-position-x: 48%;
+  }
+
+  100% {
+    background-position-x: 50%;
+  }
+}
+
+@import './mobile.scss'

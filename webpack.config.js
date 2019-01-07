@@ -1,6 +1,37 @@
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
+
+const jsRules = () => ({
+  test: /\.m?js$/,
+  exclude: /(node_modules|bower_components)/,
+  use: {
+    loader: 'babel-loader',
+    options: {
+      presets: ['@babel/preset-env'],
+    },
+  },
+});
+
+const styleRules = env => ({
+  test: /\.s?css$/,
+  use: [
+    env === 'production' ? MiniCssExtractPlugin.loader : 'style-loader',
+    'css-loader',
+    'sass-loader',
+  ],
+});
+
+const plugins = mode === 'production'
+  ? [
+    new MiniCssExtractPlugin({
+      filename: 'styles.css',
+    }),
+  ]
+  : [];
 
 module.exports = {
   mode,
@@ -13,24 +44,20 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.m?js$/,
-        exclude: /(node_modules|bower_components)/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['@babel/preset-env'],
+      jsRules(),
+      styleRules(mode),
+    ],
+  },
+  plugins,
+  optimization: {
+    minimizer: [
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorOptions: {
+          discardComments: {
+            removeAll: true,
           },
         },
-      },
-      {
-        test: /\.s?css$/,
-        use: [
-          'style-loader',
-          'css-loader',
-          'sass-loader',
-        ],
-      },
+      }),
     ],
   },
   devServer: {

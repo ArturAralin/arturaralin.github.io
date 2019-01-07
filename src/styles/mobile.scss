@@ -1,0 +1,54 @@
+@media (max-width: 1024px) { 
+  .container__header {
+    height: auto;
+
+    .name_block {
+      position: relative;
+      text-align: center;
+      
+      h1 {
+        padding: 0;
+      }
+    }
+  
+    .header_section {
+      padding: 3em 0;
+
+      p {
+        font-size: 2em;
+      }
+
+      &__developer {
+        position: relative;
+        height: auto;
+
+        &__block {
+          position: relative;
+          text-align: center;
+          font-size: 0.5em;
+          display: inline-block;
+          padding: 1em 1.5em;
+        }
+      }
+  
+      &__musician {
+        position: relative;
+        height: auto;
+        clip-path: none;
+
+        &__block {
+          position: relative;
+          text-align: center;
+          padding: 2em 0;
+          font-size: 0.5em;
+          display: inline-block;
+          padding: 1em 1.5em;
+        }
+      }
+    }
+  }
+
+  .info {
+    font-size: 0.6em;
+  }
+}
