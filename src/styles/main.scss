@@ -31,7 +31,6 @@ body {
     .header_section {
       position: absolute;
       width: 100%;
-      background-size: cover;
       height: 100vh;
   
       p {
@@ -41,7 +40,8 @@ body {
       }
 
       &__developer {
-        background: url(/static/laptop.jpeg) center;
+        background: url(/static/laptop.jpeg) center no-repeat;
+        background-size: cover;
         animation: left-bg-animation 1s;
         animation-timing-function: ease;
         
@@ -63,8 +63,9 @@ body {
       }
     
       &__musician {
-        background: url(/static/guitar.jpeg) center;
-        clip-path: polygon(100% -20%, 21% 100%, 100% 100%);
+        background: url(/static/guitar.jpeg) center no-repeat;
+        background-size: cover;
+        clip-path: polygon(100% -40%, 21% 100%, 100% 100%);
         animation: right-bg-animation  1s;
         animation-timing-function: ease;
     
