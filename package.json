@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production webpack && cp -R ./build/* .",
     "serve": "NODE_ENV=development webpack-dev-server",
+    "run-builded": "static-server .",
     "cp-static": "cp ./src/*.html ./build && cp -R ./src/static ./build"
   },
   "repository": {
@@ -34,7 +35,9 @@
     "node-sass": "^4.11.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "sass-loader": "^7.1.0",
+    "static-server": "^2.2.1",
     "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.1.1",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.2.0",
     "webpack-dev-server": "^3.1.14",

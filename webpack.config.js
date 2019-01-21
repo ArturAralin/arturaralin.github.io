@@ -1,6 +1,10 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const {
+  DefinePlugin,
+} = require('webpack');
 
 const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
@@ -47,7 +51,12 @@ module.exports = {
       styleRules(mode),
     ],
   },
-  plugins,
+  plugins: [
+    new DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(mode),
+    }),
+    ...plugins,
+  ],
   optimization: {
     minimizer: [
       new OptimizeCSSAssetsPlugin({
@@ -56,6 +65,9 @@ module.exports = {
             removeAll: true,
           },
         },
+      }),
+      new UglifyJsPlugin({
+        test: /\.jsm?/i,
       }),
     ],
   },
