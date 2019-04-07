@@ -1,5 +1,5 @@
 # My skills and knowledge
-Updated 31.01.2018
+Updated 18.02.2018
 
 ## Programming languages
 * JavaScript (deep)
@@ -8,6 +8,7 @@ Updated 31.01.2018
 * Golang (basic)
 * Java (basic)
 * Python (basic)
+* Lua (basic)
 
 ## Other languages
 * Protobuf
@@ -19,6 +20,7 @@ Updated 31.01.2018
 
 ## In-memory database
 * Redis
+* Tarantool
 
 ## Queue brokers
 * NATS
