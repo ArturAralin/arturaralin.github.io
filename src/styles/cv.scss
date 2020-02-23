@@ -1,0 +1,70 @@
+.cv {
+  display: flex;
+
+  &__header {
+    text-align: center;
+  }
+
+  &__base_information {
+    width: 40%;
+
+    &__full_name {
+      display: block;
+      font-size: 2em;
+    }
+
+    &__photo {
+      width: 80%;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    &__photo img {
+      width: 100%;
+    }
+  }
+
+  &__progress_information {
+    text-align: left;
+
+    &__item {
+      display: block;
+      border: 0 solid #303030;
+      border-left-width: 0.5em;
+      margin: 1em 0;
+
+      &__type {
+        display: block;
+        margin-left: 0.5em;
+        color: #303030;
+      }
+
+      &__title {
+        display: block;
+        font-size: 2em;
+        margin: 0 0 0.125em 0.25em;
+      }
+
+      &__interval {
+        display: block;
+        margin-left: 0.5em;
+      }
+
+      &__description {
+        display: block;
+        margin-left: 0.5em;
+        // font-size: 1.5em;
+      }
+
+      &__techs {
+        display: block;
+        margin-left: 0.3em;
+        margin-top: 0.3em;
+        font-size: 1.5em;
+      }
+    }
+  }
+}
+.cv section {
+  flex: auto;
+}

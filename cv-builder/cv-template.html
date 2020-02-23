@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles.css">
+  <title>{{title}}</title>
+</head>
+<body>
+  <div class="container">
+    <header class="cv__header">
+      <h1>CV</h1>
+    </header>
+    <main class="cv">
+      <section class="cv__base_information">
+        <div class="cv__base_information__photo">
+          <img src="/static/photo.jpg" alt="{{firstName}} {{lastName}}">
+        </div>
+        <span class="cv__base_information__full_name">{{firstName}} {{lastName}}</span>
+        <span>{{birthday}} ({{age}} years old)</span>
+      </section>
+      <section class="cv__progress_information">
+        <h2>PROGRESS</h2>
+        <span>Total progress ~ {{progressDuration}} years</span>
+        <div>{{{progress}}}</div>
+      </section>
+    </main>
+    <footer>footer</footer>
+  </div>
+  <script async src="/app.js"></script>
+</body>
+</html>

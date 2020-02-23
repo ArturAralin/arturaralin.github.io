@@ -1,0 +1,56 @@
+{
+  "en": {
+    "title": "Artur's CV",
+    "firstName": "Arutr",
+    "lastName": "Aralin",
+    "targetVacancy": "backend developer",
+    "birthday": "21.04.1997",
+    "progress": [
+      {
+        "type": "eduction",
+        "title": "Southern Federal University at Taganrog",
+        "description": "Faculty of information technologies security.\nSpecialty Information security of automated systems",
+        "start": "09.2014",
+        "end": "08.2019"
+      },
+      {
+        "type": "work",
+        "title": "Lodoss Team",
+        "description": "Outsource web development. In general writing Node.js microservices, design applications, databases structure.",
+        "start": "07.2016",
+        "end": "07.2019",
+        "techs": [
+          "Node.js",
+          "PostgreSQL",
+          "Redis",
+          "Docker",
+          "ElasticSearch",
+          "TypeScript",
+          "Tarantool"
+        ]
+      },
+      {
+        "type": "work",
+        "title": "R-Vision",
+        "description": "Automation in information security sphere. Writing backend with Node.js",
+        "start": "03.2019",
+        "end": "07.2019",
+        "techs": [
+          "Node.js",
+          "PostgreSQL",
+          "Redis",
+          "Docker",
+          "TypeScript",
+          "NestJS"
+        ]
+      },
+      {
+        "type": "eduction",
+        "title": "Start of the developer way",
+        "description": "Start writing programs at 8th grade. First programming language was a QBASIC",
+        "start": "*.2010",
+        "end": null
+      }
+    ]
+  }
+}
