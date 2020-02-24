@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build-cv": "NODE_ENV=production node cv-builder/builder.js",
     "build-pdf": "NODE_ENV=production node cv-builder/pdf.js",
-    "build": "NODE_ENV=production webpack && npm run build-cv && cp -R ./build/* . && npm run build-pdf",
+    "build": "npm run cp-static && NODE_ENV=production webpack && npm run build-cv && cp -R ./build/* . && npm run build-pdf",
     "serve": "NODE_ENV=development webpack-dev-server",
     "run-builded": "static-server .",
     "cp-static": "cp ./src/*.html ./build && cp -R ./src/static ./build"
