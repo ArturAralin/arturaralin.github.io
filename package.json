@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production webpack && cp -R ./build/* .",
+    "build-cv": "NODE_ENV=production node cv-builder/builder.js",
+    "build-pdf": "NODE_ENV=production node cv-builder/pdf.js",
+    "build": "NODE_ENV=production webpack && npm run build-cv && cp -R ./build/* . && npm run build-pdf",
     "serve": "NODE_ENV=development webpack-dev-server",
     "run-builded": "static-server .",
     "cp-static": "cp ./src/*.html ./build && cp -R ./src/static ./build"
@@ -45,6 +47,7 @@
   },
   "dependencies": {
     "handlebars": "^4.7.3",
+    "html-pdf": "^2.2.0",
     "moment": "^2.24.0",
     "normalize.css": "^8.0.1",
     "ramda": "^0.27.0"
