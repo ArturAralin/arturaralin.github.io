@@ -33,7 +33,7 @@
       {
         "type": "work",
         "title": "R-Vision",
-        "description": "Automation in information security sphere. Writing backend with Node.js",
+        "description": "Aggregation and automation in information security sphere.\nMain tasks was writing microservices with Node.js, NestJS",
         "start": "03.2019",
         "end": "07.2019",
         "techs": [
@@ -48,7 +48,7 @@
       {
         "type": "eduction",
         "title": "Start of the developer way",
-        "description": "Start writing programs at 8th grade. First programming language was a QBASIC",
+        "description": "Start writing programs at 8th grade.\nFirst programming language was a QBASIC",
         "start": "*.2010",
         "end": null
       }
