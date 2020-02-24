@@ -1,12 +1,15 @@
 .cv {
   display: flex;
+  padding: 0 6em;
 
   &__header {
     text-align: center;
   }
 
   &__base_information {
-    width: 40%;
+    text-align: right;
+    width: 50%;
+    padding-right: 2em;
 
     &__full_name {
       display: block;
@@ -14,7 +17,6 @@
     }
 
     &__photo {
-      width: 80%;
       text-align: center;
       margin: 0 auto;
     }
@@ -22,47 +24,70 @@
     &__photo img {
       width: 100%;
     }
+
+    &__block {
+      margin-top: 1em;
+
+      &__title {
+        display: block;
+        font-size: 1.5em;
+        text-transform: uppercase;
+        margin: 0.25em 0;
+      }
+
+      &__list {
+        padding: 0;
+        margin: 0;
+      }
+
+      &__list li {
+        list-style: none;
+      }
+    }
   }
 
   &__progress_information {
     text-align: left;
+    // padding-right: 6em;
+
+    &__duration {
+      color: #5d5d5d;
+    }
 
     &__item {
       display: block;
-      border: 0 solid #303030;
+      border: 0 solid #5d5d5d;
       border-left-width: 0.5em;
       margin: 1em 0;
+      padding-left: 0.5em;
+      font-size: 1.2em;
 
       &__type {
         display: block;
-        margin-left: 0.5em;
-        color: #303030;
+        color: #5d5d5d;
       }
 
       &__title {
         display: block;
         font-size: 2em;
-        margin: 0 0 0.125em 0.25em;
-      }
-
-      &__interval {
-        display: block;
-        margin-left: 0.5em;
       }
 
       &__description {
         display: block;
-        margin-left: 0.5em;
-        // font-size: 1.5em;
+        margin: 0.25em 0;
       }
 
       &__techs {
         display: block;
-        margin-left: 0.3em;
-        margin-top: 0.3em;
         font-size: 1.5em;
       }
     }
+  }
+
+  &__progress_information h2 {
+    font-size: 3em;
+    margin: 0;
+    text-transform: uppercase;
   }
 }
 .cv section {

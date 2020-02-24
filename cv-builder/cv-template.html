@@ -18,14 +18,28 @@
         </div>
         <span class="cv__base_information__full_name">{{firstName}} {{lastName}}</span>
         <span>{{birthday}} ({{age}} years old)</span>
+        <div class="cv__base_information__block">
+          <span class="cv__base_information__block__title">Contacts</span>
+          <ul class="cv__base_information__block__list">
+            <li>E-mail: artur.aralin97@gmail.com</li>
+            <li>Telegram: @aaralin</li>
+          </ul>
+        </div>
       </section>
       <section class="cv__progress_information">
+        <h2>About me</h2>
+        <div class="cv__progress_information__item">{{{about}}}</div>
+        <h2>Target vacancy</h2>
+        <div class="cv__progress_information__item">{{targetVacancy}}</div>
         <h2>PROGRESS</h2>
-        <span>Total progress ~ {{progressDuration}} years</span>
+        <span class="cv__progress_information__duration">Total progress ~ {{progressDuration}} years</span>
         <div>{{{progress}}}</div>
+        <h2>Hard skills</h2>
+        <div class="cv__progress_information__item">{{{technologies}}}</div>
+        <h2>Hobbies</h2>
+        <div class="cv__progress_information__item">{{hobbies}}</div>
       </section>
     </main>
-    <footer>footer</footer>
   </div>
   <script async src="/app.js"></script>
 </body>

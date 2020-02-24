@@ -1,18 +1,15 @@
 const moment = require('moment');
 const {
-  pipe,
-  map,
-  prop,
-  split,
-  evolve,
-  sortBy,
-  sort,
   ascend,
-  descend,
-  sortWith,
-  head,
-  when,
+  evolve,
   gt,
+  head,
+  map,
+  pipe,
+  prop,
+  sortWith,
+  split,
+  when,
 } = require('ramda');
 
 const calcAge = pipe(

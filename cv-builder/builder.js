@@ -1,25 +1,25 @@
 const {
-  map,
-  evolve,
-  pipe,
-  split,
-  ifElse,
-  always,
-  equals,
-  when,
-  type: ramdaType,
-  sortWith,
-  descend,
-  path,
-  cond,
-  allPass,
-  propEq,
   T,
-  gt,
-  join,
-  toUpper,
-  replace,
+  allPass,
+  always,
+  cond,
+  descend,
+  equals,
+  evolve,
+  ifElse,
   isNil,
+  join,
+  juxt,
+  map,
+  path,
+  pipe,
+  prop,
+  propEq,
+  replace,
+  sortWith,
+  split,
+  toUpper,
+  type: ramdaType,
 } = require('ramda');
 const Handlebars = require('handlebars');
 const { resolve: pathResolve } = require('path');
@@ -76,6 +76,7 @@ const buildEnd = ifElse(
   always('until today'),
   v => `to ${v}`,
 );
+const newlineToBR = replace(/\n/g, '<br>');
 
 const buildProgress = pipe(
   map(evolve({
@@ -93,7 +94,7 @@ const buildProgress = pipe(
       type: toUpper,
       start: buildDate,
       end: pipe(buildDate, buildEnd),
-      description: replace(/\n/g, '<br>'),
+      description: newlineToBR,
     }),
     ({
       type,
@@ -106,7 +107,6 @@ const buildProgress = pipe(
       `<div class="${BASE_STYLE}__item">`,
       `<span class="${BASE_STYLE}__item__type">${type} since ${start} ${end}</span>`,
       `<span class="${BASE_STYLE}__item__title">${title}</span>`,
-      // `<span class="${BASE_STYLE}__item__interval">Since ${start} to ${end}</span>`,
       `<span class="${BASE_STYLE}__item__description">${description}</span>`,
       type === 'WORK'
         ? `<span class="${BASE_STYLE}__item__techs">Technologies: ${techs.join(', ')}</span>`
@@ -117,16 +117,29 @@ const buildProgress = pipe(
   join('\n'),
 );
 
-const build = evolve({
-  progress: buildProgress,
-});
+const joinWithText = text => pipe(
+  join(', '),
+  v => `${text}${v}`,
+);
+const buildTechnologies = pipe(
+  juxt([
+    prop('main'),
+    prop('haveExperience'),
+  ]),
+  evolve([
+    joinWithText('Main: '),
+    joinWithText('Have experience witch: '),
+  ]),
+  join('<br><br>'),
+);
 
-const templateProps = build(PROPS);
-const r = render({
-  ...templateProps,
+const html = render({
+  ...PROPS,
+  about: newlineToBR(PROPS.about),
+  technologies: buildTechnologies(PROPS.technologies),
+  progress: buildProgress(PROPS.progress),
   age: calcAge(PROPS.birthday),
   progressDuration: calcProgressDuration(PROPS.progress),
 });
 
-
-fs.writeFileSync(OUTPUT_FILE, r);
+fs.writeFileSync(OUTPUT_FILE, html);

@@ -3,8 +3,9 @@
     "title": "Artur's CV",
     "firstName": "Arutr",
     "lastName": "Aralin",
-    "targetVacancy": "backend developer",
+    "targetVacancy": "Senior node.js backend developer",
     "birthday": "21.04.1997",
+    "about": "Start write code at 8th grade and it's still excites me. Permanently tracks IT sphere events, new technologies. Attentive to detail in work.\nAlso play music.  Have a band.",
     "progress": [
       {
         "type": "eduction",
@@ -51,6 +52,37 @@
         "start": "*.2010",
         "end": null
       }
-    ]
+    ],
+    "hobbies": "Have a two general hobbies: writing programs (unexpectable, really?) and playing/writing/recording music.",
+    "technologies": {
+      "main": [
+        "JavaScript (VanillaJS)",
+        "Node.js",
+        "PostgreSQL",
+        "Redis",
+        "ElasticSearch",
+        "Docker",
+        "Linux",
+        "TypeScript",
+        "Database design",
+        "Functional programming",
+        "Git",
+        "Express.js"
+      ],
+      "haveExperience": [
+        "Clojure",
+        "Python",
+        "Lua",
+        "PHP",
+        "Tarantool",
+        "Extjs",
+        "Vue",
+        "React",
+        "HTML",
+        "CSS",
+        "SCSS",
+        "Arduino"
+      ]
+    }
   }
 }
