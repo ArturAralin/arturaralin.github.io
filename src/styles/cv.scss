@@ -1,9 +1,26 @@
+$related-info-color: #5d5d5d;
+
 .cv {
   display: flex;
   padding: 0 6em;
 
   &__header {
-    text-align: center;
+    text-align: left;
+
+    &__title {
+      display: inline-block;
+      padding: 0.5em 0 0 3em;
+      margin: 0;
+      font-size: 2em;
+    }
+
+    &__subtitle {
+      display: inline-block;
+      font-size: 2em;
+      color: $related-info-color;
+      padding: 0 0 0.5em 0;
+
+    }
   }
 
   &__base_information {
@@ -42,6 +59,7 @@
 
       &__list li {
         list-style: none;
+        white-space: nowrap;
       }
     }
   }
@@ -51,20 +69,20 @@
     // padding-right: 6em;
 
     &__duration {
-      color: #5d5d5d;
+      color: $related-info-color;
     }
 
     &__item {
       display: block;
-      border: 0 solid #5d5d5d;
+      border: 0 solid $related-info-color;
       border-left-width: 0.5em;
       margin: 1em 0;
-      padding-left: 0.5em;
+      padding-left: 0.7em;
       font-size: 1.2em;
 
       &__type {
         display: block;
-        color: #5d5d5d;
+        color: $related-info-color;
       }
 
       &__title {
