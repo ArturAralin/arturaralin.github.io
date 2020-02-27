@@ -3,12 +3,17 @@
     "title": "Artur's CV",
     "firstName": "Arutr",
     "lastName": "Aralin",
+    "contacts": {
+      "email": "artur.aralin97@gmail.com",
+      "telegram": "@aaralin",
+      "github": "ArturAralin"
+    },
     "targetVacancy": "Senior node.js backend developer",
     "birthday": "21.04.1997",
     "about": "Start write code at 8th grade and it's still excites me. Permanently tracks IT sphere events, new technologies. Attentive to detail in work.\nAlso play music.  Have a band.",
     "progress": [
       {
-        "type": "eduction",
+        "type": "education",
         "title": "Southern Federal University at Taganrog",
         "description": "Faculty of information technologies security.\nSpecialty Information security of automated systems",
         "start": "09.2014",
@@ -46,7 +51,7 @@
         ]
       },
       {
-        "type": "eduction",
+        "type": "education",
         "title": "Start of the developer way",
         "description": "Start writing programs at 8th grade.\nFirst programming language was a QBASIC",
         "start": "*.2010",
