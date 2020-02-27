@@ -22,8 +22,9 @@
         <div class="cv__base_information__block">
           <span class="cv__base_information__block__title">Contacts</span>
           <ul class="cv__base_information__block__list">
-            <li>E-mail: artur.aralin97@gmail.com</li>
-            <li>Telegram: @aaralin</li>
+            <li>E-mail: {{contacts.email}}</li>
+            <li>Telegram: {{contacts.telegram}}</li>
+            <li>GitHub: {{contacts.github}}</li>
           </ul>
         </div>
       </section>
@@ -41,6 +42,9 @@
         <div class="cv__progress_information__item">{{hobbies}}</div>
       </section>
     </main>
+    <footer class="cv__footer">
+      Download <a href="/cv.pdf" target="blank" alt="PDF version of {{title}}">PDF version</a>
+    </footer>
   </div>
   <script async src="/app.js"></script>
 </body>
