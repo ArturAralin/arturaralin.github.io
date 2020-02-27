@@ -60,6 +60,7 @@ $related-info-color: #5d5d5d;
       &__list li {
         list-style: none;
         white-space: nowrap;
+        padding-top: 0.25em;
       }
     }
   }
@@ -106,6 +107,14 @@ $related-info-color: #5d5d5d;
     font-size: 3em;
     margin: 0;
     text-transform: uppercase;
+  }
+
+  &__footer {
+    text-align: left;
+  }
+
+  &__footer a {
+    color: #fff;
   }
 }
 .cv section {
