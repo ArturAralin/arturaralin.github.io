@@ -133,7 +133,12 @@ const buildTechnologies = pipe(
   join('<br><br>'),
 );
 
-const html = render({
+const removeScriptBlocks = replace(/<script.*><\/script>\n/g, '');
+
+const html = pipe(
+  render,
+  removeScriptBlocks,
+)({
   ...PROPS,
   about: newlineToBR(PROPS.about),
   technologies: buildTechnologies(PROPS.technologies),
@@ -141,5 +146,7 @@ const html = render({
   age: calcAge(PROPS.birthday),
   progressDuration: calcProgressDuration(PROPS.progress),
 });
+
+console.log(html);
 
 fs.writeFileSync(OUTPUT_FILE, html);
