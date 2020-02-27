@@ -40,6 +40,10 @@ const styles = `<style>
   .cv__header__title {
     padding: 0.5em 0 0 1em;
   }
+
+  .cv__footer {
+    display: none;
+  }
 </style>`;
 
 const html = [
