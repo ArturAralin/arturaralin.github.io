@@ -9,6 +9,8 @@ const PDF_OUTPUT = path.resolve(__dirname, '../cv.pdf');
 const srcHtml = fs.readFileSync(CV_HTML, 'utf8');
 const options = { format: 'A4' };
 const styles = `<style>
+  @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
   body {
     color: black;
     background: white;
@@ -31,6 +33,11 @@ const styles = `<style>
 
   .cv__progress_information h2 {
     font-size: 2em;
+  }
+
+  .cv__progress_information__item {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1em;
   }
 
   .cv__progress_information__item__techs {
