@@ -147,6 +147,4 @@ const html = pipe(
   progressDuration: calcProgressDuration(PROPS.progress),
 });
 
-console.log(html);
-
 fs.writeFileSync(OUTPUT_FILE, html);
