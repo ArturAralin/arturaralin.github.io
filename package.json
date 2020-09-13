@@ -46,6 +46,7 @@
     "write-file-webpack-plugin": "^4.5.1"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "handlebars": "^4.7.3",
     "html-pdf": "^2.2.0",
     "moment": "^2.24.0",
