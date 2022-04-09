@@ -49,7 +49,7 @@
     "babel-polyfill": "^6.26.0",
     "handlebars": "^4.7.3",
     "html-pdf": "^2.2.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "normalize.css": "^8.0.1",
     "ramda": "^0.27.0"
   }
