@@ -48,7 +48,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "handlebars": "^4.7.3",
-    "html-pdf": "^2.2.0",
+    "html-pdf": "^3.0.1",
     "marked": "^4.0.3",
     "moment": "^2.24.0",
     "normalize.css": "^8.0.1",
