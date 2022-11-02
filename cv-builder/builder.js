@@ -108,7 +108,7 @@ const buildProgress = pipe(
       `<span class="${BASE_STYLE}__item__type">${type} since ${start} ${end}</span>`,
       `<span class="${BASE_STYLE}__item__title">${title}</span>`,
       `<span class="${BASE_STYLE}__item__description">${description}</span>`,
-      type === 'WORK'
+      type === 'WORK' || type === 'OPEN SOURCE'
         ? `<span class="${BASE_STYLE}__item__techs">Technologies: ${techs.join(', ')}</span>`
         : null,
       '</div>',

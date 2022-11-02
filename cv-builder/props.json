@@ -36,6 +36,19 @@
         ]
       },
       {
+        "type": "Open Source",
+        "title": "SWC (Speedy Web Compiler)",
+        "description": "Porting eslint rules from JS to Rust with SWC api",
+        "start": "01.2022",
+        "end": "06.2022",
+        "techs": [
+          "Node.js",
+          "Rust",
+          "TypeScript",
+          "ESLint"
+        ]
+      },
+      {
         "type": "work",
         "title": "R-Vision",
         "description": "Aggregation and automation in information security sphere.\nMain tasks was writing microservices with Node.js, NestJS and Rust",
@@ -56,7 +69,7 @@
         "title": "Esq Dev",
         "description": "CRM system for attorneys and bookkeepers. Can't tell more because of NDA",
         "start": "02.2020",
-        "end": "now",
+        "end": null,
         "techs": [
           "Node.js",
           "PostgreSQL",
@@ -104,7 +117,9 @@
         "HTML",
         "CSS",
         "SCSS",
-        "Arduino"
+        "Arduino",
+        "Tokio",
+        "RocksDb"
       ]
     }
   }
