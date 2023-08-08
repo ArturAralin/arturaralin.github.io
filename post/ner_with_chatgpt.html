@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NER с использованием ChatGPT</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+  <!-- load by flag -->
+  <link rel="stylesheet" href="/static/a11y-light.css">
+  <style>
+    * {
+      --typography-spacing-vertical: 0.75rem !important;
+      --color: #2f3940 !important;
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <div>
+      <nav>
+        <ul>
+          <li><strong>Технический блог Артура</strong></li>
+        </ul>
+        <ul>
+          <li><a href="/">Главная</a></li>
+          <li><a href="#">CV</a></li>
+          <li><a href="https://github.com/ArturAralin" target="_blank">GitHub</a></li>
+          <!-- <li><a href="#" role="button">Button</a></li> -->
+        </ul>
+      </nav>
+    </div>
+    <div class="grid">
+      <div><h1>NER с использованием ChatGPT</h1>
+<p><img src="/pages/ner_chatgpt/picture.jpg" alt="Да-да-да. Я сгенерил эту картинку с помощью AI"></p>
+<p>Подкинул мне как-то коллега-товарищ идею делать NER (named entities recognition) используя GPT-3.5 (УТОЧНИТЬ ВЕРСИЮ ГПТ СЕТИ) нейронку. Я подумал и решил, чего нет когда да?
+Сейчас расскажу о моих результатах эксперимента.</p>
+<h2>Постановка задачи</h2>
+<p>Сделать распознование адресов, имен организаций, номеров телефонов, товаров в тексте и представить их в формате понятном для компьюета. Под &quot;понятный для компьютера&quot; так-же имеется в виду, что нам не нужен человек, который будет валидировать ответы GPT сети.</p>
+<p>Адреса нам интересно разобрать на следующие компоненты: страна, регион, район, улица, номер дома.</p>
+<p>Для товаров мы будем искать: название, цену, категорию, примечания.</p>
+<p>Имена организаций и номера телефонов будем просто собирать как строки.</p>
+<p>В качестве формата возьмем JSON. Ну а что вы еще ожидали от жаваскрипт-писателя со стажем?</p>
+<p>Обращу внимание, что для каждого запроса на разбор я создаю новый контекст, чтобы предыдущий не влиял на ответ.</p>
+<h2>Пробуем найти имена организаций</h2>
+<p>С футера сайта своей альма-матер я взял контактную иформацию. Она сама по себе имеет не много шума, но и не имеет строгой структуры. Над этим семплом текста я и буду эксперементировать.</p>
+<pre><code>ул. Чехова, 2, ауд. И-201
+г. Таганрог, 347922, Ростовская область, Россия
+
+Телефон: 8 (8634) 360-450
+
+E-Mail: info@ictis.sfedu.ru
+
+Ответственный за сайт: --- ---
+Сайт разработан Студенческим конструкторским бюро
+&quot;Компьютерное инновационное творчество&quot; ИКТИБ
+
+© 2015-2023, Институт компьютерных технологий и информационной безопасности ИТА ЮФУ
+</code></pre>
+<p>Попробуем сформулировать запрос &quot;в лоб&quot;.</p>
+<pre><code>Распознай имена организаций и дай ответ в формате json
+
+&lt;sample_text&gt;
+</code></pre>
+<p>GPT сеть пошуршала матрицами и выдала нам следующее:</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;организации&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-string">&quot;Институт компьютерных технологий и информационной безопасности ИТА ЮФУ&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">&quot;Студенческое конструкторское бюро &#x27;Компьютерное инновационное творчество&#x27; ИКТИБ&quot;</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>Как видим, нейронка не плохо справилась с распознованием, но ключи на кириллице не прикольно. Я усовершенствовал свой запрос до</p>
+<pre><code>Распознай имена организаций и дай ответ в формате json {&quot;organizations&quot;:[&quot;organization name&quot;]}
+
+&lt;sample_text&gt;
+</code></pre>
+<p>Вот! Теперь ключ в нужном формате, но json явно не валидный. Я пробовал разные варианты промтов, но мне так и не удалось заставить его дать мне верный ответ с первого промта в контексте.</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;organizations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-string">&quot;Институт компьютерных технологий и информационной безопасности ИТА ЮФУ&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">&quot;Студенческое конструкторское бюро &quot;</span>Компьютерное инновационное творчество<span class="hljs-string">&quot; ИКТИБ&quot;</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>В том же контексте я попросил его исправить json и что вы думаете?! Таки исправил! Но я считаю, что это не удовлетворительно, потому что это может выстрелить в любой момент.</p>
+<p>Просил его исправить, дав ему на вход следующий промт:</p>
+<pre><code>Сейчас строки в массиве имеют неверный формат. Исправь их
+</code></pre>
+<p>Ответ, который я получил от нейронки.</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;organizations&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-string">&quot;Институт компьютерных технологий и информационной безопасности ИТА ЮФУ&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-string">&quot;Студенческое конструкторское бюро \&quot;Компьютерное инновационное творчество\&quot; ИКТИБ&quot;</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<h2>Номера телефонов</h2>
+<p>Имея накопленный опыт, попробуем распознать номера телефонов в тексте. Промт я соформировал такой</p>
+<pre><code>Распознай в тексте номера телефонов. Ответ дай в формате [&quot;phone number&quot;]
+
+&lt;sample_text&gt;
+</code></pre>
+<p>После непродолжительного шуршания я получил ответ:</p>
+<pre><code class="language-json"><span class="hljs-punctuation">[</span><span class="hljs-string">&quot;8 (8634) 360-450&quot;</span><span class="hljs-punctuation">]</span>
+</code></pre>
+<p>PROFIT! Как бы да, но нет. В процессе написания этой статьи во всех моих запросах мне удавалось распознать номера телефонов с разной степенью успешности, но ранее мне я воспроизводил ситуацию, когда GPT отказывался распозновать номера, ссылаясть на то, что не хочет распозновать персональные данные и все такое. Это тоже стоит учитывать.</p>
+<h2>Адреса</h2>
+<p>Попробую разобрать более сложную структуру. Для начала я попробовал бросить все &quot;на самотек&quot; то есть дать GPT самой определиться с структурой.</p>
+<pre><code>Найди  в тексте географические адреса и разбей их на отдельные компоненты. Ответ дай в формате json
+
+&lt;sample_text&gt;
+</code></pre>
+<p>Ответ оказался несколько избыточным, но адрес распознался великолепно. JSON не валидный - потрачено.</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;address&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;street&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ул. Чехова&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;house_number&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;room&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ауд. И-201&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;city&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Таганрог&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;postal_code&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;347922&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;region&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Ростовская область&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;country&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Россия&quot;</span>
+  <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;phone&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;8 (8634) 360-450&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;info@ictis.sfedu.ru&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;website_responsible&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;--- ---&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;website_developed_by&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Студенческое конструкторское бюро &quot;</span>Компьютерное инновационное творчество<span class="hljs-string">&quot; ИКТИБ&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;copyright&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;© 2015-2023, Институт компьютерных технологий и информационной безопасности ИТА ЮФУ&quot;</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>Конкретизируем свои хотелки, попробуем задать желаемую структуру.</p>
+<pre><code>Найди  в тексте географические адреса и разбей их на отдельные компоненты. Ответ дай в формате {&quot;address&quot;:{&quot;street&quot;:&quot;street name&quot;,&quot;house_number&quot;:&quot;house number&quot;,&quot;room&quot;:&quot;room&quot;,&quot;city&quot;:&quot;city name&quot;,&quot;postal_code&quot;:&quot;postal code&quot;,&quot;region&quot;:&quot;region name&quot;,&quot;country&quot;:&quot;country name&quot;}}
+
+&lt;sample_text&gt;
+</code></pre>
+<p>Теперь осталось только нужное!</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;address&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;street&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ул. Чехова&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;house_number&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;room&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;ауд. И-201&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;city&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Таганрог&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;postal_code&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;347922&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;region&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Ростовская область&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;country&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Россия&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>Стоит отметить, что иногда GPT выдает несуразный мапинг для адресов. Так что придется делать какой-то санитайзер, чтобы отбрасывать лишнее.</p>
+<h2>Товары</h2>
+<p>На мой взгляд это самый интересный кейс. Чеки, акты и прочие документы, где может встречаться перечисление каких-то товаров или услуг с их параметрами.</p>
+<p>Для проверки этого кейса я взял другой семпл текста. Данный семпл есть описание товара на одной из музыкальных барахолок.</p>
+<pre><code>Нижний Новгород / Пересыл
+
+Возможно на хайгейновые педальки. Предлагайте вообщем, какую именно еще не определился.
+
+Zephyr fx / 11к / Родная коробка
+Родился пару месяцев назад. Понял ,определился. Нужны другие оверы.
+
+Akai E2 Headrush Delay/Looper | 7к
+Есть косметические дефекты по функционалу все ок.Улучшена кнопка переключения эффектов.
+Липучка на дне
+
+Vox 847 | 3k
+Состояние хорошее. Но продавец с авито оказался подлецом. Давно это было. Я сразу не обратил внимание на такой нюанс как ход потца. Ощущение хода не очень,происходит провал в движении и только потом небольшое сапротивление. Да и кажется что эффект не до конца докручивается. Вариант для тех у кого есть свободный потенциометр.
+</code></pre>
+<p>Так же пробую дать волю нейронке и прошу дать ответ в свободной форме</p>
+<pre><code>Определи товары в тексте. Цену напиши в рублях. Ответ дай в формате json
+
+&lt;sample_text&gt;
+</code></pre>
+<p>Ответ выглядит хорошо. Описание товаров она посчитала ненужным, цену дала в рублях как я и заказывал.</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;товары&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;название&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Zephyr fx&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;цена&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;11000 руб.&quot;</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;название&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Akai E2 Headrush Delay/Looper&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;цена&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;7000 руб.&quot;</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;название&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Vox 847&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;цена&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;3000 руб.&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>Пробую вариант с конкретной структурой.</p>
+<pre><code>Определи товары в тексте. Цену напиши в рублях. Ответ дай в формате {&quot;products&quot;:[{ &quot;name&quot;:&quot;product name&quot;, &quot;price&quot;:&quot;price&quot;, &quot;description&quot;: &quot;product description&quot;, &quot;type&quot;: &quot;product type&quot; }]}
+
+&lt;sample_text&gt;
+</code></pre>
+<p>Прэтти гуд! В поле type, в целом, попали правильные типы, но конкретики не много. Я пробовал втормы промтом конкретизировать тип эффектов, но особо качественне ответ не стал. Ах да, в поле price пропало название валюты. Последнее не сильно критично, но снова нужна постобработка.</p>
+<pre><code class="language-json"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;products&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Zephyr fx&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;price&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;11000&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Родная коробка. Родился пару месяцев назад. Понял, определился. Нужны другие оверы.&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;хайгейновые педальки&quot;</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Akai E2 Headrush Delay/Looper&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;price&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;7000&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Есть косметические дефекты, по функционалу все ок. Улучшена кнопка переключения эффектов. Липучка на дне.&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;эффекты&quot;</span>
+    <span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Vox 847&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;price&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;3000&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Состояние хорошее. Ощущение хода не очень, происходит провал в движении и только потом небольшое сопротивление. Да и кажется, что эффект не до конца докручивается. Вариант для тех, у кого есть свободный потенциометр.&quot;</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;эффекты&quot;</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<h2>Вывод</h2>
+
+<div>
+  Ключевые слова: <u>Named Entity Recognition (NER)</u>, <u>GPT</u>, <u>Research</u>
+</div>
+<hr>
+<div class="grid">
+  <div>
+    <hgroup>
+      <h6>Автор: Арутр Аралин</h6>
+      <h6>Telegram: @aaralin, email: username@aaralin.ru</h6>
+    </hgroup>
+  </div>
+  <div style="text-align: right;"><a href="#"><kbd>Лайк, подписка, колокольчик</kbd></a></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
+</div>
+    </div>
+  </main>
+</body>
+</html>

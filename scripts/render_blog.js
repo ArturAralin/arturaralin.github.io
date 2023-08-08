@@ -78,15 +78,17 @@ async function main() {
     return (new Date(b.postDate).getTime()) - (new Date(a.postDate).getTime())
   });
 
-  const gh = await getGithubActivity();
+  const postedArticles = orderedArticles.filter((article) => article.postDate);
 
-  // const gh = [];
+  // const gh = await getGithubActivity();
+
+  const gh = [];
 
   const indexPageHtml = render(BASE_TEMPLATE, {
     title: index.title,
     body: render(GENERAL_TEMPLATE, {
       activity: gh,
-      posts: articles.map((article) => {
+      posts: postedArticles.map((article) => {
         return `<li><a href="/post/${article.urlName}">[${formatDate(article.postDate)}] ${article.title}</a></li>`
       }).join('\n'),
     }),
@@ -104,6 +106,7 @@ async function main() {
         title: article.title,
         body: render(ARTICLE_TEMPLATE, {
           content: articleHtml,
+          tags: (article.tags || []).map((tag) => `<u>${tag}</u>`).join(', '),
         }),
       }),
     );

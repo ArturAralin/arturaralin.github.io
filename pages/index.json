@@ -4,20 +4,19 @@
   },
   "articles": [
     {
-      "title": "My title",
-      "preview": "preview",
-      "postDate": "2023-08-08",
-      "folder": "some_article",
-      "mdFile": "some_article.md",
-      "urlName": "some_article.html"
+      "title": "Анализ серверных логов с Pandas",
+      "postDate": null,
+      "folder": "logs_analysis_with_pandas",
+      "mdFile": "logs_analysis_with_pandas.md",
+      "urlName": "logs_analysis_with_pandas.html"
     },
     {
-      "title": "Late post",
-      "preview": "preview",
-      "postDate": "2023-08-01",
-      "folder": "some_article",
-      "mdFile": "some_article.md",
-      "urlName": "some_article.html"
+      "title": "NER с использованием ChatGPT",
+      "postDate": "2023-08-08",
+      "folder": "ner_chatgpt",
+      "mdFile": "ner_chatgpt.md",
+      "urlName": "ner_with_chatgpt.html",
+      "tags": ["Named Entity Recognition (NER)", "GPT", "Research"]
     }
   ]
 }
