@@ -1,0 +1,18 @@
+{
+  "name": "arturaralin.github.io",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:ArturAralin/arturaralin.github.io.git",
+  "author": "Artur A <artur.aralin97@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "highlight.js": "^11.8.0",
+    "markdown-it": "^13.0.1",
+    "node-fetch": "2.6.7",
+    "static-server": "^2.2.1"
+  },
+  "scripts": {
+    "serve": "static-server .",
+    "render": "node scripts/render_blog.js"
+  }
+}

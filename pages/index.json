@@ -1,0 +1,14 @@
+{
+  "index": {
+    "title": "Технический блог Артура"
+  },
+  "articles": [
+    {
+      "title": "My title",
+      "preview": "preview",
+      "postDate": "2023",
+      "mdFile": "some_article/some_article.md",
+      "urlName": "some_article.html"
+    }
+  ]
+}
