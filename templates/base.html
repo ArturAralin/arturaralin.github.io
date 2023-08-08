@@ -10,6 +10,9 @@
   <style>
     * {
       --typography-spacing-vertical: 0.75rem !important;
+    }
+
+    p {
       --color: #2f3940 !important;
     }
   </style>
@@ -19,7 +22,7 @@
     <div>
       <nav>
         <ul>
-          <li><strong>Технический блог Артура</strong></li>
+          <li><h3>Технический блог Артура</h3></li>
         </ul>
         <ul>
           <li><a href="/">Главная</a></li>
@@ -31,6 +34,16 @@
     </div>
     <div class="grid">
       <div>{{body}}</div>
+    </div>
+    <hr>
+    <div class="grid">
+      <div>
+        <hgroup>
+          <h6>Автор: Арутр Аралин</h6>
+          <h6>Telegram: @aaralin, email: username@aaralin.ru</h6>
+        </hgroup>
+      </div>
+      <div style="text-align: right;"><a href="#"><kbd>Лайк, подписка, колокольчик</kbd></a></div>
     </div>
   </main>
 </body>

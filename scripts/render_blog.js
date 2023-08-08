@@ -4,6 +4,7 @@ const fetch = require('node-fetch');
 const { URL } = require('url');
 const markdownIt = require('markdown-it');
 const hljs = require('highlight.js');
+const xml = require('xml');
 
 const md = markdownIt({
   highlight: function (str, lang) {
@@ -68,6 +69,52 @@ function formatDate(rawDate) {
   return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
 }
 
+function sitemapUrl({ loc, lastMod, changeFreq, priority }) {
+  const date = new Date(lastMod);
+
+  const addZero = (v) => v < 10 ? `0${v}` : v;
+
+  return {
+    url: [
+      {},
+      {
+        loc: [{}, loc],
+      },
+      {
+        lastmod: [{}, `${date.getFullYear()}-${addZero(date.getMonth() + 1)}-${addZero(date.getDate())}`],
+      },
+      {
+        changefreq: [{}, changeFreq],
+      },
+      {
+        priority: [{}, priority],
+      },
+    ]
+  };
+}
+
+function sitemap(articles) {
+  return xml({
+    urlset: [
+      {
+        _attr: { xmlns: "http://www.sitemaps.org/schemas/sitemap/0.9" },
+      },
+      sitemapUrl({
+        loc: 'https://aaralin.ru',
+        lastMod: new Date(),
+        priority: '1',
+        changeFreq: 'daily',
+      }),
+      ...articles.map((article) => sitemapUrl({
+        loc: `https://aaralin.ru/post/${article.urlName}`,
+        changeFreq: 'monthly',
+        priority: '0.5',
+        lastMod: article.updateDate || article.postDate,
+      })),
+    ]
+  });
+}
+
 async function main() {
   const {
     articles = [],
@@ -80,9 +127,9 @@ async function main() {
 
   const postedArticles = orderedArticles.filter((article) => article.postDate);
 
-  // const gh = await getGithubActivity();
+  const gh = await getGithubActivity();
 
-  const gh = [];
+  // const gh = [];
 
   const indexPageHtml = render(BASE_TEMPLATE, {
     title: index.title,
@@ -94,6 +141,7 @@ async function main() {
     }),
   });
 
+  fs.writeFileSync(path.resolve(INDEX_DIR, './sitemap.xml'), sitemap(postedArticles));
   fs.writeFileSync(path.resolve(INDEX_DIR, './index.html'), indexPageHtml);
 
   orderedArticles.forEach((article) => {
@@ -106,6 +154,7 @@ async function main() {
         title: article.title,
         body: render(ARTICLE_TEMPLATE, {
           content: articleHtml,
+          publishDate: formatDate(article.postDate),
           tags: (article.tags || []).map((tag) => `<u>${tag}</u>`).join(', '),
         }),
       }),
