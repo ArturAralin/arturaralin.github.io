@@ -54,13 +54,18 @@ function render(template, props) {
   });
 }
 
-function patchImgUrls(html) {
+function patchImgUrls(folder, html) {
   return html.replace(/<img(.*)>/g, (imgTag) => {
-    return imgTag.replace(/(src="(.*)" )/g, (src, _, imageUrl) => {
-      console.log(imageUrl);
-      return src;
+    return imgTag.replace(/src=\"([^"]*)\"/g, (src, imageUrl) => {
+      return `src="/pages/${folder}/${imageUrl}"`;
     });
   });
+}
+
+function formatDate(rawDate) {
+  const date = new Date(rawDate);
+
+  return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
 }
 
 async function main() {
@@ -69,23 +74,29 @@ async function main() {
     index
   } = JSON.parse(fs.readFileSync(path.resolve(PAGES_DIR, './index.json')));
 
-  const gh = []; // await getGithubActivity();
+  const orderedArticles = articles.sort((a, b) => {
+    return (new Date(b.postDate).getTime()) - (new Date(a.postDate).getTime())
+  });
+
+  const gh = await getGithubActivity();
+
+  // const gh = [];
 
   const indexPageHtml = render(BASE_TEMPLATE, {
     title: index.title,
     body: render(GENERAL_TEMPLATE, {
       activity: gh,
       posts: articles.map((article) => {
-        return `<li><a href="/post/${article.urlName}">${article.title}</a></li>`
+        return `<li><a href="/post/${article.urlName}">[${formatDate(article.postDate)}] ${article.title}</a></li>`
       }).join('\n'),
     }),
   });
 
   fs.writeFileSync(path.resolve(INDEX_DIR, './index.html'), indexPageHtml);
 
-  articles.forEach((article) => {
-    const articleMarkDown = fs.readFileSync(path.resolve(PAGES_DIR, `${article.mdFile}`), 'utf-8');
-    const articleHtml = patchImgUrls(md.render(articleMarkDown));
+  orderedArticles.forEach((article) => {
+    const articleMarkDown = fs.readFileSync(path.resolve(PAGES_DIR, article.folder, `${article.mdFile}`), 'utf-8');
+    const articleHtml = patchImgUrls(article.folder, md.render(articleMarkDown));
 
     fs.writeFileSync(
       path.resolve(POSTS_DIR, article.urlName),

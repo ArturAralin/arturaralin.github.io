@@ -6,8 +6,17 @@
     {
       "title": "My title",
       "preview": "preview",
-      "postDate": "2023",
-      "mdFile": "some_article/some_article.md",
+      "postDate": "2023-08-08",
+      "folder": "some_article",
+      "mdFile": "some_article.md",
+      "urlName": "some_article.html"
+    },
+    {
+      "title": "Late post",
+      "preview": "preview",
+      "postDate": "2023-08-01",
+      "folder": "some_article",
+      "mdFile": "some_article.md",
       "urlName": "some_article.html"
     }
   ]
