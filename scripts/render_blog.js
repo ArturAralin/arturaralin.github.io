@@ -5,6 +5,7 @@ const { URL } = require('url');
 const markdownIt = require('markdown-it');
 const hljs = require('highlight.js');
 const xml = require('xml');
+const { minify: minifyHtml } = require('html-minifier');
 
 const md = markdownIt({
   highlight: function (str, lang) {
@@ -34,7 +35,7 @@ async function getGithubActivity() {
   const activity = result.items.filter(pr => pr.author_association !== 'OWNER');
 
   return activity
-    .slice(0, 10)
+    .slice(0, 5)
     .map(({
       title,
       pull_request: {
@@ -115,6 +116,13 @@ function sitemap(articles) {
   });
 }
 
+function optimizeHtml(html) {
+  return minifyHtml(html, {
+    collapseWhitespace: true,
+    removeComments: true,
+  });
+}
+
 async function main() {
   const {
     articles = [],
@@ -136,13 +144,18 @@ async function main() {
     body: render(GENERAL_TEMPLATE, {
       activity: gh,
       posts: postedArticles.map((article) => {
-        return `<li><a href="/post/${article.urlName}">[${formatDate(article.postDate)}] ${article.title}</a></li>`
+        return `<li>
+          <a href="/post/${article.urlName}">[${formatDate(article.postDate)}] ${article.title}</a>
+          <!--Ключевые слова: ${(article.tags || []).map((tag) => `<small>${tag}</small>`).join(', ')}-->
+        </li>`;
       }).join('\n'),
     }),
   });
 
+  // todo: remove all from POSTS_DIR
+
   fs.writeFileSync(path.resolve(INDEX_DIR, './sitemap.xml'), sitemap(postedArticles));
-  fs.writeFileSync(path.resolve(INDEX_DIR, './index.html'), indexPageHtml);
+  fs.writeFileSync(path.resolve(INDEX_DIR, './index.html'), optimizeHtml(indexPageHtml));
 
   orderedArticles.forEach((article) => {
     const articleMarkDown = fs.readFileSync(path.resolve(PAGES_DIR, article.folder, `${article.mdFile}`), 'utf-8');
@@ -150,14 +163,14 @@ async function main() {
 
     fs.writeFileSync(
       path.resolve(POSTS_DIR, article.urlName),
-      render(BASE_TEMPLATE, {
+      optimizeHtml(render(BASE_TEMPLATE, {
         title: article.title,
         body: render(ARTICLE_TEMPLATE, {
           content: articleHtml,
           publishDate: formatDate(article.postDate),
           tags: (article.tags || []).map((tag) => `<u>${tag}</u>`).join(', '),
         }),
-      }),
+      })),
     );
   });
 }

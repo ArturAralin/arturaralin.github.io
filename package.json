@@ -7,6 +7,7 @@
   "license": "MIT",
   "devDependencies": {
     "highlight.js": "^11.8.0",
+    "html-minifier": "^4.0.0",
     "markdown-it": "^13.0.1",
     "node-fetch": "2.6.7",
     "static-server": "^2.2.1",
