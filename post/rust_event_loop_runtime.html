@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>[Черновик] Event loop runtime на Rust</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="stylesheet" href="/static/a11y-light.css"><style>* {
+      --typography-spacing-vertical: 0.75rem !important;
+      --font-size: 20px;
+    }
+
+    p {
+      --color: #2f3940 !important;
+    }</style></head><body><main class="container"><div><nav><ul><li><hgroup><h3>Технический блог Артура</h3><h6>IT и музыкантсво</h6></hgroup></li></ul><ul><li><a href="/">Главная</a></li><li><a href="https://github.com/ArturAralin" target="_blank">GitHub</a></li></ul></nav></div><div class="grid"><div><h1><strong>ЭТО ЧЕРНОВИК. Рано еще. <a href="https://www.yandex.ru/images/search?text=%D0%BC%D0%B5%D0%BC%20%D1%81%20%D0%BA%D0%BE%D1%82%D0%B0%D0%BC%D0%B8">Лучше посмотри мемы с котами</a></strong></h1><h1>Event loop runtime на Rust</h1><p>Лето. Пели птицы, солнце пробивалось сквозь щель между штор, ветер нежно окутывал снующий по улицам народ, а меня окутывала очередная волна желания программировать. Этот пост - результатом моей, на мой взгляд достаточно удачной, попытки написать простой рантайм на языке Rust.</p><h2>Мотивация и предостережение</h2><p>Я сделал этот проект с целью собственного самообразования. Как известо лучший способ что-то понять - это объяснить это что-то кому-нибудь. Посему, это не инструкция, не туториал и не образец того как делать рантайм. Если вы находитесь в поисках рантайма для Rust то есть https://tokio.rs/ и https://async.rs/.</p><h2>Архитектура</h2><p>Я много лет пишу на nodejs и мук выбора архитектуры я не испытывал. Event loop, она же реализация кооперативной многозадачности, на мой взгляд максимально простая и понятная архитектура.</p><h3>В общих чертах</h3><p>Идея архитектуры заключается в том, что у нас есть бесконечный цикл и очередь задач. Итерция цикла называется тиком (англ. tick). Задачи в очереди могут быть готовы к обработке или находиться в состоянии выполнения. Задачи готовые к обработке во время тика обрабатываются последовательно в том порядке, в котром они попали в очередь обработки.</p><p>В псевдокоде выглядит примерно так</p><pre><code>tasks_queue = queue()
+
+loop {
+  for task in get_ready_to_handle(tasks_queue) {
+    execute(task)
+  }
+
+  if is_empty(task_queue) {
+    break
+  }
+}
+</code></pre><h3>Я вам врал, все несколько сложнее</h3><p>Одной очередью тут не обойтись. Их нужно две и еще табличка где мы будем хранить наши задачи.</p><h2>Основной цикл</h2><p>Тут про логику обработки сообщений. Как доставать из очереди</p><h2>Особенности фьюч в расте</h2><p>Тут про контекст и вейкеры</p><h2>Шаренный контекст</h2><p>Тут почему Шаренный, зачем две очереди</p><h2>Вэйкер</h2><p>Шаренный контекст, запоминание id задачи, очередь готовых задач</p><h2>schedule, который смотрит в глобальную переменную</h2><h2>примеры фьюч</h2><h2>конец</h2><div>Опубликовано: 1/1/1970</div><div>Ключевые слова: <u>Rust</u>, <u>Системное программирование</u>, <u>Event loop</u>, <u>Асинхронность</u></div><script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script></div></div><hr><div class="grid"><div><hgroup><h6>Автор: Арутр Аралин</h6><h6>Telegram: @aaralin, email: username@aaralin.ru</h6></hgroup></div><div style="text-align: right;"><a href="https://github.com/ArturAralin"><kbd>Лайк, подписка, колокольчик</kbd></a></div></div></main></body></html>

@@ -25,6 +25,14 @@
       "mdFile": "ner_chatgpt.md",
       "urlName": "ner_with_chatgpt.html",
       "tags": ["Named Entity Recognition (NER)", "GPT", "Research"]
+    },
+    {
+      "title": "Event loop runtime на Rust",
+      "postDate": null,
+      "folder": "rust_event_loop_runtime",
+      "mdFile": "rust_event_loop_runtime.md",
+      "urlName": "rust_event_loop_runtime.html",
+      "tags": ["Rust", "Системное программирование", "Event loop", "Асинхронность"]
     }
   ]
 }
