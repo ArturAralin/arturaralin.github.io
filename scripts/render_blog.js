@@ -158,13 +158,19 @@ async function main() {
   fs.writeFileSync(path.resolve(INDEX_DIR, './index.html'), optimizeHtml(indexPageHtml));
 
   orderedArticles.forEach((article) => {
-    const articleMarkDown = fs.readFileSync(path.resolve(PAGES_DIR, article.folder, `${article.mdFile}`), 'utf-8');
+    const isDraft = !article.postDate;
+    const articleMarkDownContent = fs.readFileSync(path.resolve(PAGES_DIR, article.folder, `${article.mdFile}`), 'utf-8');
+    const articleMarkDown = isDraft
+      ? `# __ЭТО ЧЕРНОВИК. Рано еще. [Лучше посмотри мемы с котами](https://www.yandex.ru/images/search?text=%D0%BC%D0%B5%D0%BC%20%D1%81%20%D0%BA%D0%BE%D1%82%D0%B0%D0%BC%D0%B8)__\n${articleMarkDownContent}`
+      : articleMarkDownContent;
     const articleHtml = patchImgUrls(article.folder, md.render(articleMarkDown));
 
     fs.writeFileSync(
       path.resolve(POSTS_DIR, article.urlName),
       optimizeHtml(render(BASE_TEMPLATE, {
-        title: article.title,
+        title: isDraft
+          ? `[Черновик] ${article.title}`
+          : article.title,
         body: render(ARTICLE_TEMPLATE, {
           content: articleHtml,
           publishDate: formatDate(article.postDate),
