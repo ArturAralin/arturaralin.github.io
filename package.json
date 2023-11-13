@@ -11,7 +11,9 @@
     "markdown-it": "^13.0.1",
     "node-fetch": "2.6.7",
     "static-server": "^2.2.1",
-    "xml": "^1.0.1"
+    "xml": "^1.0.1",
+    "markdown-it-anchor": "^8.6.7",
+    "string": "^3.3.3"
   },
   "scripts": {
     "serve": "static-server .",

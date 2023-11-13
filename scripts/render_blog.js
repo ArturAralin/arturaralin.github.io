@@ -6,6 +6,10 @@ const markdownIt = require('markdown-it');
 const hljs = require('highlight.js');
 const xml = require('xml');
 const { minify: minifyHtml } = require('html-minifier');
+const string = require('string')
+const anchor = require('markdown-it-anchor')
+
+// const slugify = s => string(s).slugify().toString()
 
 const md = markdownIt({
   highlight: function (str, lang) {
@@ -17,6 +21,8 @@ const md = markdownIt({
 
     return '';
   },
+}).use(anchor, {
+  permalink: anchor.permalink.headerLink({ safariReaderFix: true })
 });
 
 const PAGES_DIR = path.resolve(__dirname, '../pages');
