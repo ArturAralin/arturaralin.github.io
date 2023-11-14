@@ -63,7 +63,9 @@ function render(template, props = {}) {
   };
 
   return template.replace(/\{\{(.*)\}\}/g, (_, tag) => {
-    return composedHeaders[tag] || `{{${tag}}}`;
+    return composedHeaders[tag] !== undefined
+      ? composedHeaders[tag]
+      : `{{${tag}}}`
   });
 }
 
