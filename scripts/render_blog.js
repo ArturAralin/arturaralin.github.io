@@ -56,9 +56,14 @@ async function getGithubActivity() {
     .join('\n');
 };
 
-function render(template, props) {
+function render(template, props = {}) {
+  const composedHeaders = {
+    headers: '',
+    ...props,
+  };
+
   return template.replace(/\{\{(.*)\}\}/g, (_, tag) => {
-    return props[tag] || `{{${tag}}}`;
+    return composedHeaders[tag] || `{{${tag}}}`;
   });
 }
 
@@ -147,6 +152,9 @@ async function main() {
 
   const indexPageHtml = render(BASE_TEMPLATE, {
     title: index.title,
+    headers: [
+      `<meta name="description" content="${index.description}">`
+    ].join('\n'),
     body: render(GENERAL_TEMPLATE, {
       activity: gh,
       posts: postedArticles.map((article) => {
