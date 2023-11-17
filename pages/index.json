@@ -12,12 +12,15 @@
       "urlName": "logs_analysis_with_pandas.html"
     },
     {
-      "title": "Попытка объяснить event-loop",
-      "postDate": null,
+      "title": "NodeJS event-loop для самых маленьких",
+      "postDate": "2023-11-17",
       "folder": "nodejs_event_loop",
       "mdFile": "nodejs_event_loop.md",
       "urlName": "nodejs_event_loop.html",
-      "tags": []
+      "tags": [
+        "NodeJS",
+        "event-loop"
+      ]
     },
     {
       "title": "NER с использованием ChatGPT",
