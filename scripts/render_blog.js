@@ -1,3 +1,5 @@
+// https://github.com/ArturAralin/arturaralin.github.io/blob/master/pages/logs_analysis_with_pandas/logs_analysis_with_pandas.md
+
 const fs = require('fs');
 const path = require('path');
 const fetch = require('node-fetch');
@@ -9,7 +11,7 @@ const { minify: minifyHtml } = require('html-minifier');
 const string = require('string')
 const anchor = require('markdown-it-anchor')
 
-// const slugify = s => string(s).slugify().toString()
+const GITHUB_BLOB_PREFIX = 'https://github.com/ArturAralin/arturaralin.github.io/blob/master';
 
 const md = markdownIt({
   highlight: function (str, lang) {
@@ -69,12 +71,24 @@ function render(template, props = {}) {
   });
 }
 
-function patchImgUrls(folder, html) {
-  return html.replace(/<img(.*)>/g, (imgTag) => {
-    return imgTag.replace(/src=\"([^"]*)\"/g, (src, imageUrl) => {
-      return `src="/pages/${folder}/${imageUrl}"`;
-    });
-  });
+function pathUrls(folder, html) {
+  return html
+    .replace(/<img(.*)>/g, (imgTag) => {
+      return imgTag.replace(/src=\"([^"]*)\"/g, (src, imageUrl) => {
+        return `src="/pages/${folder}/${imageUrl}"`;
+      });
+    })
+    .replace(/<a(.*)>/g, (imgTag) => {
+      return imgTag.replace(/href=\"([^"]*)\"/g, (src, href) => {
+        if (href.startsWith('http') || href.startsWith('#')) {
+          return `href="${href}"`;
+        }
+
+        const newSrc = `${GITHUB_BLOB_PREFIX}/pages/${folder}/${href}`;
+
+        return `href="${newSrc}"`;
+      });
+    });;
 }
 
 function formatDate(rawDate) {
@@ -179,7 +193,7 @@ async function main() {
     const articleMarkDown = isDraft
       ? `# __ЭТО ЧЕРНОВИК. Рано еще. [Лучше посмотри мемы с котами](https://www.yandex.ru/images/search?text=%D0%BC%D0%B5%D0%BC%20%D1%81%20%D0%BA%D0%BE%D1%82%D0%B0%D0%BC%D0%B8)__\n${articleMarkDownContent}`
       : articleMarkDownContent;
-    const articleHtml = patchImgUrls(article.folder, md.render(articleMarkDown));
+    const articleHtml = pathUrls(article.folder, md.render(articleMarkDown));
 
     fs.writeFileSync(
       path.resolve(POSTS_DIR, article.urlName),

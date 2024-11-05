@@ -12,12 +12,15 @@
       "urlName": "logs_analysis_with_pandas.html"
     },
     {
-      "title": "Попытка объяснить event-loop",
-      "postDate": null,
+      "title": "NodeJS event-loop для самых маленьких",
+      "postDate": "2023-11-17",
       "folder": "nodejs_event_loop",
       "mdFile": "nodejs_event_loop.md",
       "urlName": "nodejs_event_loop.html",
-      "tags": []
+      "tags": [
+        "NodeJS",
+        "event-loop"
+      ]
     },
     {
       "title": "NER с использованием ChatGPT",
@@ -34,6 +37,14 @@
       "mdFile": "rust_event_loop_runtime.md",
       "urlName": "rust_event_loop_runtime.html",
       "tags": ["Rust", "Системное программирование", "Event loop", "Асинхронность"]
+    },
+    {
+      "title": "V8. Строки и память",
+      "postDate": null,
+      "folder": "v8_js_strings_and_memory",
+      "mdFile": "v8_js_strings_and_memory.md",
+      "urlName": "v8_js_strings_and_memory.html",
+      "tags": ["V8", "JavaScript", "Работа с памятью"]
     }
   ]
 }
