@@ -22,12 +22,15 @@
 
 ## Запись строки в переменную
 [assign.js](tests/assign.js)
+
 ![Гафик для случая чтения](pics/assign.png)
 
 ## Слайс (срез)
 [slice.js](tests/slice.js)
+
 ![Гафик для случая чтения](pics/slice.png)
 
 ## Конкатенация (склеивание)
 [with_mutations.js](tests/with_mutations.js)
+
 ![Гафик для случая чтения](pics/concat.png)
